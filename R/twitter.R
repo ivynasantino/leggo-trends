@@ -3,8 +3,13 @@ library(lubridate)
 library(tidyverse)
 library(tibble)
 
-get_tweets_pls_apelido <- function(words_df) {
-  tweets <- purrr::map_df(words_df$apelido, ~ .get_tweets(.x))
+get_tweets_pls <- function(words_df, apelido = T) {
+  if (apelido) {
+    tweets <- purrr::map_df(words_df$apelido, ~ .get_tweets(.x))  
+  } else {
+    tweets <- purrr::map_df(words_df$nome_formal, ~ .get_tweets(.x))  
+  }
+  return(tweets)
 }
 
 .get_tweets <- function(word) {
